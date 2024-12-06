@@ -24,7 +24,6 @@ function part1(list) {
   return l.join().match(/X/g).length;
 }
 //inefficient code for part2 today
-//theoretically works, but haven't tested yet
 function part2(l) {
 	let val = 0;
 	for (let i = 0; i < l.length; i++) {
