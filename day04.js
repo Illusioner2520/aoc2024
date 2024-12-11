@@ -20,8 +20,8 @@ function part2(l) {
     let val = 0;
     for (let i = 0; i < l.length - 2; i++) {
         for (let j = 0; j < l[0].length - 2; j++) {
-            let outer = l[i][j] + l[i][j+2] + l[i+2][j+2] + l[i+2][j];
-            if (l[i+1][j+1] == "A" && ["MMSS","SMMS","SSMM","MSSM"].includes(outer)) {
+            let outer = l[i][j] + l[i][j + 2] + l[i + 2][j + 2] + l[i + 2][j];
+            if (l[i + 1][j + 1] == "A" && ["MMSS", "SMMS", "SSMM", "MSSM"].includes(outer)) {
                 val++;
             }
         }

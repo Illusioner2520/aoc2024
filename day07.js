@@ -5,12 +5,12 @@ function part1(l) {
         let equation = l[i].split(": ");
         let result = equation[0] - 0;
         let inputs = equation[1].split(" ")
-        if (checkIfPossible(result,inputs)) val += result;
+        if (checkIfPossible(result, inputs)) val += result;
     }
     return val;
 }
-function checkIfPossible(result,inputs) {
-    for (let i = 0; i < (2**(inputs.length - 1)); i++) {
+function checkIfPossible(result, inputs) {
+    for (let i = 0; i < (2 ** (inputs.length - 1)); i++) {
         let str = "";
         for (let j = 0; j < inputs.length; j++) {
             str = "(" + str
@@ -31,23 +31,23 @@ function part2(l) {
         let equation = l[i].split(": ");
         let result = equation[0] - 0;
         let inputs = equation[1].split(" ")
-        if (checkIfPossibleButNowWithConcatenation(result,inputs)) val += result;
+        if (checkIfPossibleButNowWithConcatenation(result, inputs)) val += result;
     }
     return val;
 }
-function checkIfPossibleButNowWithConcatenation(result,inputs) {
-    for (let i = 0; i < (3**(inputs.length - 1)); i++) {
+function checkIfPossibleButNowWithConcatenation(result, inputs) {
+    for (let i = 0; i < (3 ** (inputs.length - 1)); i++) {
         let val = inputs[0];
         let b3 = i.toString(3).split("");
         while (b3.length < inputs.length - 1) {
             b3 = ['0'].concat(b3)
         }
         for (let j = 1; j < inputs.length; j++) {
-            if (b3[j-1] == "0") {
+            if (b3[j - 1] == "0") {
                 val = (val - 0) + (inputs[j] - 0);
-            } else if (b3[j-1] == "1") {
+            } else if (b3[j - 1] == "1") {
                 val = (val - 0) * (inputs[j] - 0);
-            } else if (b3[j-1] == "2") {
+            } else if (b3[j - 1] == "2") {
                 val = val.toString() + inputs[j];
             }
         }

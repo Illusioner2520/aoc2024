@@ -32,34 +32,34 @@ function part2(str) {
         for (let j = 0; j < (numlist[i] - 0); j++) {
             if (i % 2 == 0) {
                 files.push(i / 2);
-                max = Math.max(max,i/2)
+                max = Math.max(max, i / 2)
             } else {
                 files.push(".");
             }
         }
     }
     for (let i = max; i >= 0; i--) {
-      let numoftimes = (files.join(",") + ",").match(new RegExp(i+",","g")).length;
-      let originalindex = files.indexOf(i);
-      let numofperiods = 0;
-      let index = -1;
-      for (let j = 0; j < files.length; j++) {
-        if (files[j] == ".") {
-          numofperiods++
-        } else {
-          numofperiods = 0;
+        let numoftimes = (files.join(",") + ",").match(new RegExp(i + ",", "g")).length;
+        let originalindex = files.indexOf(i);
+        let numofperiods = 0;
+        let index = -1;
+        for (let j = 0; j < files.length; j++) {
+            if (files[j] == ".") {
+                numofperiods++
+            } else {
+                numofperiods = 0;
+            }
+            if (numofperiods == numoftimes) {
+                index = j - numofperiods + 1;
+                break;
+            }
         }
-        if (numofperiods == numoftimes) {
-          index = j - numofperiods + 1;
-          break;
+        if (index == -1) continue;
+        if (index > originalindex) continue;
+        for (let j = 0; j < numoftimes; j++) {
+            files[index + j] = i;
+            files[originalindex + j] = ".";
         }
-      }
-      if (index == -1) continue;
-      if (index > originalindex) continue;
-      for (let j = 0; j < numoftimes; j++) {
-        files[index + j] = i;
-        files[originalindex + j] = ".";
-      }
     }
     let val = 0;
     for (let i = 0; i < files.length; i++) {

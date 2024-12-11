@@ -6,23 +6,23 @@ function part1(l) {
   }
   let val = 0;
   for (let i = 0; i < zeroIndexes.length; i++) {
-    let zCoords = toCoordPoints(l,zeroIndexes[i]);
+    let zCoords = toCoordPoints(l, zeroIndexes[i]);
     let coordList = [zCoords];
     let nines = [];
     while (coordList.length > 0) {
       let c = coordList[0];
       let v = l[c.y][c.x];
       if (l[c.y + 1] && l[c.y + 1][c.x] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x,y:c.y+1})
+        coordList.push({ x: c.x, y: c.y + 1 })
       }
       if (l[c.y - 1] && l[c.y - 1][c.x] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x,y:c.y-1})
+        coordList.push({ x: c.x, y: c.y - 1 })
       }
-      if (l[c.y][c.x+1] && l[c.y][c.x+1] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x+1,y:c.y})
+      if (l[c.y][c.x + 1] && l[c.y][c.x + 1] - 0 === v - 0 + 1) {
+        coordList.push({ x: c.x + 1, y: c.y })
       }
-      if (l[c.y][c.x-1] && l[c.y][c.x-1] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x-1,y:c.y})
+      if (l[c.y][c.x - 1] && l[c.y][c.x - 1] - 0 === v - 0 + 1) {
+        coordList.push({ x: c.x - 1, y: c.y })
       }
       if (v === "9") {
         nines.push(c.y * l[0].length + c.x);
@@ -35,8 +35,8 @@ function part1(l) {
   }
   return val;
 }
-function toCoordPoints(arr,n) {
-    return {x:n % arr[0].length,y:Math.floor(n / arr[0].length)};
+function toCoordPoints(arr, n) {
+  return { x: n % arr[0].length, y: Math.floor(n / arr[0].length) };
 }
 function part2(l) {
   let zeroIndexes = [];
@@ -45,23 +45,23 @@ function part2(l) {
   }
   let val = 0;
   for (let i = 0; i < zeroIndexes.length; i++) {
-    let zCoords = toCoordPoints(l,zeroIndexes[i]);
+    let zCoords = toCoordPoints(l, zeroIndexes[i]);
     let coordList = [zCoords];
     let nines = [];
     while (coordList.length > 0) {
       let c = coordList[0];
       let v = l[c.y][c.x];
       if (l[c.y + 1] && l[c.y + 1][c.x] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x,y:c.y+1})
+        coordList.push({ x: c.x, y: c.y + 1 })
       }
       if (l[c.y - 1] && l[c.y - 1][c.x] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x,y:c.y-1})
+        coordList.push({ x: c.x, y: c.y - 1 })
       }
-      if (l[c.y][c.x+1] && l[c.y][c.x+1] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x+1,y:c.y})
+      if (l[c.y][c.x + 1] && l[c.y][c.x + 1] - 0 === v - 0 + 1) {
+        coordList.push({ x: c.x + 1, y: c.y })
       }
-      if (l[c.y][c.x-1] && l[c.y][c.x-1] - 0 === v - 0 + 1) {
-        coordList.push({x:c.x-1,y:c.y})
+      if (l[c.y][c.x - 1] && l[c.y][c.x - 1] - 0 === v - 0 + 1) {
+        coordList.push({ x: c.x - 1, y: c.y })
       }
       if (v === "9") {
         nines.push(c);

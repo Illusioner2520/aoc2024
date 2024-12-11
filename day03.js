@@ -14,10 +14,10 @@ function part2(s) {
     let indexes = []
     let indexesForDosAndDonts = []
     for (const match of s.matchAll(/mul\(\d+,\d+\)/g)) {
-        indexes.push({"index":match.index,"value":match[0]});
+        indexes.push({ "index": match.index, "value": match[0] });
     }
     for (const match of s.matchAll(/(do|don\'t)\(\)/g)) {
-        indexesForDosAndDonts.push({"index":match.index,"value":match[0]});
+        indexesForDosAndDonts.push({ "index": match.index, "value": match[0] });
     }
     for (let i = 0; i < indexes.length; i++) {
         let doOrDontValue = "";
@@ -29,7 +29,7 @@ function part2(s) {
         }
         if (doOrDontValue == "do()") {
             let nums = indexes[i].value.match(/\d+/g);
-            console.log("multiplying",nums[0],nums[1],nums[0] * nums[1])
+            console.log("multiplying", nums[0], nums[1], nums[0] * nums[1])
             val += nums[0] * nums[1]
         }
     }
