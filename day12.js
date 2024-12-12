@@ -1,3 +1,4 @@
+//let l = ["RRRRIICCFF","RRRRIICCCF","VVRRRCCFFF","VVRCCCJFFF","VVVVCJJCFE","VVIVCCJJEE","VVIIICJJEE","MIIIIIJJEE","MIIISIJEEE","MMMISSJEEE"]
 function part1(l) {
   let available = Array.from({ length: (l.length) * (l[0].length) }, (v, k) => k)
   let val = 0;
@@ -40,7 +41,7 @@ function part1(l) {
       available.splice(available.indexOf(toSpaceNumber(l, c)), 1)
       coordList.shift()
     }
-    console.log(char,area,perimeter)
+    console.log(char, area, perimeter)
     val += (area * perimeter)
   }
   return val;
@@ -100,11 +101,7 @@ function part2(l) {
       available.splice(available.indexOf(toSpaceNumber(l, c)), 1)
       coordList.shift()
     }
-    let sides = 0;
-    //calculate sides here
-    sides = perimeter;
-    console.log(char,area,sides)
-    val += (area * sides)
+    val += (area * Math.floor(perimeter / 2) * 2)
   }
   return val;
 }
