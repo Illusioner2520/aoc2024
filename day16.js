@@ -1,4 +1,5 @@
-let l = ["###############","#.......#....E#","#.#.###.#.###.#","#.....#.#...#.#","#.###.#####.#.#","#.#.#.......#.#","#.#.#####.###.#","#...........#.#","###.#.#####.#.#","#...#.....#.#.#","#.#.#.###.#.#.#","#.....#...#.#.#","#.###.#.#.#.#.#","#S..#.....#...#","###############"]
+
+//let l = ["###############","#.......#....E#","#.#.###.#.###.#","#.....#.#...#.#","#.###.#####.#.#","#.#.#.......#.#","#.#.#####.###.#","#...........#.#","###.#.#####.#.#","#...#.....#.#.#","#.#.#.###.#.#.#","#.....#...#.#.#","#.###.#.#.#.#.#","#S..#.....#...#","###############"]
 console.log(part1(l))
 function part1(l) {
   let coords = toCoordPoints(l,l.join("").indexOf("S"));
@@ -14,28 +15,27 @@ function part1(l) {
     let dir = dirs[coord.dir];
     if (l[coord.y + dir[1]][coord.x + dir[0]] != "#" && !allCoordList.includes(toUnique(l,{x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dir}))) {
       coordList.push({x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dir,pts:coord.pts + 1 })
-      //allCoordList.push(toUnique(l,{x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dirs}))
+      allCoordList.push(toUnique(l,{x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dirs}))
     }
-    if (l[coord.y + 1][coord.x] != "#" && coord.dir != 2 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y + 1,dir:0}))) {
-      coordList.push({x:coord.x,y:coord.y + 1,dir:0,pts:coord.pts + 1000 })
-      //allCoordList.push(toUnique(l,{x:coord.x,y:coord.y + 1,dir:0}))
+    if (l[coord.y + 1][coord.x] != "#" && coord.dir != 0 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:2}))) {
+      coordList.push({x:coord.x,y:coord.y,dir:2,pts:coord.pts + 1000 })
+      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:2}))
     }
-    if (l[coord.y - 1][coord.x] != "#" && coord.dir != 0 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y - 1,dir:2}))) {
-      coordList.push({x:coord.x,y:coord.y - 1,dir:2,pts:coord.pts + 1000 })
-      //allCoordList.push(toUnique(l,{x:coord.x,y:coord.y - 1,dir:2}))
+    if (l[coord.y - 1][coord.x] != "#" && coord.dir != 2 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:0}))) {
+      coordList.push({x:coord.x,y:coord.y,dir:0,pts:coord.pts + 1000 })
+      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:0}))
     }
-    if (l[coord.y][coord.x + 1] != "#" && coord.dir != 3 && !allCoordList.includes(toUnique(l,{x:coord.x + 1,y:coord.y,dir:1}))) {
-      coordList.push({x:coord.x + 1,y:coord.y,dir:1,pts:coord.pts + 1000 })
-      //allCoordList.push(toUnique(l,{x:coord.x + 1,y:coord.y,dir:1}))
+    if (l[coord.y][coord.x + 1] != "#" && coord.dir != 3 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:1}))) {
+      coordList.push({x:coord.x,y:coord.y,dir:1,pts:coord.pts + 1000 })
+      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:1}))
     }
-    if (l[coord.y][coord.x - 1]  != "#" && coord.dir != 1 && !allCoordList.includes(toUnique(l,{x:coord.x - 1,y:coord.y,dir:3}))) {
-      coordList.push({x:coord.x - 1,y:coord.y,dir:3,pts:coord.pts + 1000 })
-      //allCoordList.push(toUnique(l,{x:coord.x - 1,y:coord.y,dir:3}))
+    if (l[coord.y][coord.x - 1] != "#" && coord.dir != 1 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:3}))) {
+      coordList.push({x:coord.x,y:coord.y,dir:3,pts:coord.pts + 1000 })
+      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:3}))
     }
     if (l[coord.y][coord.x] == "E") {
       minAmt = Math.min(minAmt,coord.pts)
     }
-    console.log(l[coord.y][coord.x],coord.pts)
     coordList.shift();
   }
   return minAmt;
