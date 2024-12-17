@@ -1,44 +1,84 @@
-
-//let l = ["###############","#.......#....E#","#.#.###.#.###.#","#.....#.#...#.#","#.###.#####.#.#","#.#.#.......#.#","#.#.#####.###.#","#...........#.#","###.#.#####.#.#","#...#.....#.#.#","#.#.#.###.#.#.#","#.....#...#.#.#","#.###.#.#.#.#.#","#S..#.....#...#","###############"]
-console.log(part1(l))
+//let l = ["###############", "#.......#....E#", "#.#.###.#.###.#", "#.....#.#...#.#", "#.###.#####.#.#", "#.#.#.......#.#", "#.#.#####.###.#", "#...........#.#", "###.#.#####.#.#", "#...#.....#.#.#", "#.#.#.###.#.#.#", "#.....#...#.#.#", "#.###.#.#.#.#.#", "#S..#.....#...#", "###############"]
 function part1(l) {
-  let coords = toCoordPoints(l,l.join("").indexOf("S"));
-  coords.dir = 1;
-  coords.pts = 0;
-  let coordList = [coords]
-  let allCoordList = [toUnique(l,coords)]
-  let dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]]
-  let minAmt = 100000;
-  //dirs go in this order: NESW
-  while (coordList.length > 0) {
-    let coord = coordList[0];
-    let dir = dirs[coord.dir];
-    if (l[coord.y + dir[1]][coord.x + dir[0]] != "#" && !allCoordList.includes(toUnique(l,{x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dir}))) {
-      coordList.push({x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dir,pts:coord.pts + 1 })
-      allCoordList.push(toUnique(l,{x:coord.x + dir[0],y:coord.y + dir[1],dir:coord.dirs}))
+    let coords = toCoordPoints(l, l.join("").indexOf("S"));
+    let dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+    let turning = [[1, 3], [0, 2], [1, 3], [0, 2]]
+    //dirs go in this order: NESW
+    coords.dir = 1;
+    coords.pts = 0;
+    let vals = {};
+    let minAmt = 10000000;
+    let coordList = [coords];
+    while (coordList.length > 0) {
+        if (coordList.length % 100 == 0) console.log(coordList.length);
+        let coord = coordList[0];
+        coordList.shift();
+        let dir = dirs[coord.dir];
+        let turn = turning[coord.dir]
+        let u = toUnique(l, coord);
+        if (vals[u] && vals[u] < coord.pts) {
+            continue;
+        }
+        if (l[coord.y][coord.x] == "E") {
+            minAmt = Math.min(minAmt, coord.pts)
+            continue;
+        }
+        if (l[coord.y][coord.x] == "#") {
+            continue;
+        }
+        vals[u] = vals[u] ? Math.min(vals[u], coord.pts) : coord.pts;
+        coordList.push({ x: coord.x + dir[0], y: coord.y + dir[1], dir: coord.dir, pts: coord.pts + 1 })
+        for (let i of turn) {
+            if (l[coord.y + dirs[i][1]][coord.x + dirs[i][0]] != "#") coordList.push({ x: coord.x, y: coord.y, dir: i, pts: coord.pts + 1000 })
+        }
     }
-    if (l[coord.y + 1][coord.x] != "#" && coord.dir != 0 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:2}))) {
-      coordList.push({x:coord.x,y:coord.y,dir:2,pts:coord.pts + 1000 })
-      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:2}))
+    return minAmt;
+}
+function part2(l) {
+    let coords = toCoordPoints(l, l.join("").indexOf("S"));
+    console.log(l.join("").indexOf("E"))
+    let dirs = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+    let turning = [[1, 3], [0, 2], [1, 3], [0, 2]]
+    //dirs go in this order: NESW
+    coords.dir = 1;
+    coords.pts = 0;
+    coords.path = []
+    let vals = {};
+    let minAmt = 10000000;
+    let coordList = [coords];
+    let potentialBestPaths = []
+    while (coordList.length > 0) {
+        if (coordList.length % 100 == 0) console.log(coordList.length);
+        let coord = coordList[0];
+        coordList.shift();
+        let dir = dirs[coord.dir];
+        let turn = turning[coord.dir]
+        let u = toUnique(l, coord);
+        let u1 = toSpaceNumber(l,coord)
+        if (vals[u] && vals[u] < coord.pts) {
+            continue;
+        }
+        if (l[coord.y][coord.x] == "E") {
+            minAmt = Math.min(minAmt, coord.pts)
+            potentialBestPaths.push({num:coord.pts,path:coord.path.concat([u1])})
+            continue;
+        }
+        if (l[coord.y][coord.x] == "#") {
+            continue;
+        }
+        vals[u] = vals[u] ? Math.min(vals[u], coord.pts) : coord.pts;
+        coordList.push({ x: coord.x + dir[0], y: coord.y + dir[1], dir: coord.dir, pts: coord.pts + 1, path: coord.path.concat([u1]) })
+        for (let i of turn) {
+            if (l[coord.y + dirs[i][1]][coord.x + dirs[i][0]] != "#") coordList.push({ x: coord.x, y: coord.y, dir: i, pts: coord.pts + 1000, path: coord.path.concat([u1]) })
+        }
     }
-    if (l[coord.y - 1][coord.x] != "#" && coord.dir != 2 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:0}))) {
-      coordList.push({x:coord.x,y:coord.y,dir:0,pts:coord.pts + 1000 })
-      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:0}))
+    let paths = []
+    for (let i of potentialBestPaths) {
+        if (i.num == minAmt) {
+            paths = paths.concat(i.path);
+        }
     }
-    if (l[coord.y][coord.x + 1] != "#" && coord.dir != 3 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:1}))) {
-      coordList.push({x:coord.x,y:coord.y,dir:1,pts:coord.pts + 1000 })
-      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:1}))
-    }
-    if (l[coord.y][coord.x - 1] != "#" && coord.dir != 1 && !allCoordList.includes(toUnique(l,{x:coord.x,y:coord.y,dir:3}))) {
-      coordList.push({x:coord.x,y:coord.y,dir:3,pts:coord.pts + 1000 })
-      allCoordList.push(toUnique(l,{x:coord.x,y:coord.y,dir:3}))
-    }
-    if (l[coord.y][coord.x] == "E") {
-      minAmt = Math.min(minAmt,coord.pts)
-    }
-    coordList.shift();
-  }
-  return minAmt;
+    return [...new Set(paths)].length;
 }
 function toCoordPoints(arr, n) {
     return { x: n % arr[0].length, y: Math.floor(n / arr[0].length) };
@@ -46,8 +86,8 @@ function toCoordPoints(arr, n) {
 function toSpaceNumber(arr, n) {
     return n.y * arr[0].length + n.x;
 }
-function toUnique(arr,n) {
-  return 4 * toSpaceNumber(arr,n) + n.dir;
+function toUnique(arr, n) {
+    return 4 * toSpaceNumber(arr, n) + n.dir;
 }
 function setValue(l, y, x, v) {
     let v1 = l[y].split("");
