@@ -3,8 +3,6 @@
 //let c = 0n;
 //let program = "0,3,5,4,3,0"
 let l = program.split(",");
-console.log(part1(a,b,c,l))
-console.log(part2(b,c,l))
 function part1(a,b,c,l) {
     let index = 0;
     let output = [];
